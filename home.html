@@ -1026,323 +1026,162 @@
   </script>
 
   <!-- ================== ADDED SCRIPT: wire product preview from clicks (mega links + cards + footer links) ================== -->
-<script>
-  // scripts.js - hero, mega menu, products, preview, modal, dev-logger
+  <script>
+    (function(){
+      const summaries = {
+        "laminate": "Multi-layer laminated glass engineered for occupant protection and noise control — bespoke thicknesses & interlayers.",
+        "acoustic": "Specialised laminates designed to reduce reverberation and improve room acoustics for commercial and residential projects.",
+        "lowe": "High performance Low-E coatings and single glazed options for solar control and improved thermal performance.",
+        "security": "Security-grade laminates for forced entry resistance, ballistic and impact-rated applications.",
+        "mirror": "High quality mirrors for interior, architectural and display use — various finishes and backing options.",
+        "oneway": "One-way vision systems for observation rooms, security and privacy applications.",
+        "merch": "Display glass and fabricated merchandising solutions for retail and exhibition environments.",
+        "sheets": "Flat glass sheets available in a range of thicknesses for fabrication and finishing.",
+        "blocks": "Solid glass blocks for architectural features, partitions and light-transmitting walls.",
+        "toughened": "Tempered glass with certified impact resistance — ideal for doors, façades and balustrades.",
+        "dgu": "Double glazed unit options for thermal performance and solar control. Choose from clear on clear, E-tech and ThermaLux ranges."
+      };
 
-// dev logger helper
-(function(){
-  const logBox = document.getElementById('dev-log');
-  function showLog(msg){ if(!logBox) return; logBox.classList.add('show'); const line = document.createElement('div'); line.textContent = (new Date()).toLocaleTimeString() + ' — ' + msg; logBox.appendChild(line); logBox.scrollTop = logBox.scrollHeight; console.debug(msg); }
-  window.__devLog = showLog;
-  window.addEventListener('error', function(e){ showLog('Error: ' + (e.message || e)); });
-  window.addEventListener('unhandledrejection', function(ev){ showLog('Promise rejection: ' + (ev.reason && (ev.reason.message || ev.reason)) ); });
-  window.addEventListener('keydown', function(e){ if(e.key === 'D' && (e.ctrlKey || e.metaKey)) { logBox.classList.toggle('show'); logBox.setAttribute('aria-hidden', logBox.classList.contains('show') ? 'false' : 'true'); }}); 
-})();
-
-// set --vh for mobile
-(function(){ function setVh(){ document.documentElement.style.setProperty('--vh', (window.innerHeight * 0.01) + 'px'); } setVh(); window.addEventListener('resize', setVh); })();
-
-// Wait for DOM then init Swiper + behaviors
-document.addEventListener('DOMContentLoaded', function(){
-  try {
-    // --- HERO SWIPER: ensure container exists ---
-    const heroEl = document.querySelector('.hero-swiper');
-    if(heroEl && typeof Swiper !== 'undefined'){
-      // destroy previous instance if any (avoid double-init)
-      if(heroEl.swiper && heroEl.swiper.destroy) heroEl.swiper.destroy(true,true);
-      const hero = new Swiper(heroEl, {
-        loop: true,
-        effect: 'fade',
-        fadeEffect: { crossFade: true },
-        speed: 900,
-        autoplay: { delay: 5200, disableOnInteraction: false },
-        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-        pagination: { el: '.swiper-pagination', clickable: true },
-        keyboard: { enabled: true, onlyInViewport: true },
-      });
-
-      // thumbs control
-      const thumbs = Array.from(document.querySelectorAll('.thumb'));
-      function setActiveThumb(idx){ thumbs.forEach((t,i)=> t.classList.toggle('active', i===idx)); }
-      setActiveThumb(0);
-      hero.on('slideChange', function(){ setActiveThumb(hero.realIndex); });
-      thumbs.forEach(t=>{
-        t.addEventListener('click', ()=> hero.slideToLoop(Number(t.dataset.index)));
-        t.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t.click(); } });
-      });
-    } else {
-      window.__devLog && window.__devLog('Swiper not found or .hero-swiper missing');
-    }
-
-    // apply data-bg images to product media
-    document.querySelectorAll('.psi-media').forEach(media => { const s = media.dataset.bg; if(s) media.style.backgroundImage = `url('${s}')`; });
-
-  } catch(err){
-    window.__devLog && window.__devLog('Init error: ' + err.message);
-  }
-});
-
-// Mega + mobile toggles
-(function(){
-  function $$(s){ return Array.from(document.querySelectorAll(s)); }
-  document.addEventListener('DOMContentLoaded', function(){
-    try {
-      const megaItem = document.querySelector('.nav-item.has-mega');
-      const megaPanel = document.querySelector('.mega-panel');
-      const productsBtn = document.querySelector('.nav-item.has-mega .nav-btn');
-      const hamburger = document.querySelector('.hamburger');
-      const mobilePanel = document.querySelector('.mobile-panel');
-      const backdrop = megaPanel && megaPanel.querySelector('.backdrop');
-      const isMobile = () => window.innerWidth <= 980;
-
-      if(megaItem && megaPanel && productsBtn){
-        productsBtn.setAttribute('aria-expanded', 'false');
-        megaPanel.setAttribute('aria-hidden', 'true');
-
-        function openMega(){ megaPanel.classList.add('open'); productsBtn.setAttribute('aria-expanded','true'); megaPanel.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; const first = megaPanel.querySelector('a,button,[tabindex]:not([tabindex="-1"])'); if(first) first.focus(); }
-        function closeMega(returnFocus=true){ megaPanel.classList.remove('open'); productsBtn.setAttribute('aria-expanded','false'); megaPanel.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(returnFocus){ try{ productsBtn.focus({preventScroll:true}); }catch(e){} } }
-
-        productsBtn.addEventListener('click', function(e){
-          e.preventDefault(); e.stopPropagation();
-          if(isMobile()){
-            if(mobilePanel){ mobilePanel.classList.add('open'); hamburger && hamburger.classList.add('open'); document.body.style.overflow = 'hidden'; }
-            return;
-          }
-          if(megaPanel.classList.contains('open')) closeMega(); else openMega();
-        });
-
-        if(backdrop) backdrop.addEventListener('click', function(e){ e.stopPropagation(); closeMega(); });
-        $$('.mega-panel a').forEach(a => a.addEventListener('click', function(){ closeMega(false); }));
-        document.addEventListener('click', function(e){ if(!megaPanel.classList.contains('open')) return; if(e.target.closest('.mega-panel') || e.target.closest('.nav-item.has-mega')) return; closeMega(); });
-        document.addEventListener('keydown', function(e){
-          if(e.key === 'Escape' || e.key === 'Esc'){
-            if(megaPanel.classList.contains('open')) { e.preventDefault(); closeMega(); }
-            if(mobilePanel && mobilePanel.classList.contains('open')){ mobilePanel.classList.remove('open'); hamburger && hamburger.classList.remove('open'); document.body.style.overflow=''; }
-          }
-        });
-        window.addEventListener('resize', function(){ if(isMobile()) closeMega(); });
+      function normalizeKey(text){
+        if(!text) return '';
+        let t = text.trim().toLowerCase();
+        // common variations
+        t = t.replace(/\b(low[\s-]*e|low[-\s]*e)\b/,'lowe');
+        t = t.replace(/\b(one[\s-]*way|one[-\s]*way)\b/,'oneway');
+        t = t.replace(/\b(acoustic)\b/,'acoustic');
+        t = t.replace(/\s+/g,' ');
+        // try match known keys
+        for(const k of Object.keys(summaries)){
+          if(t.includes(k)) return k;
+        }
+        // fallback: words to keys mapping
+        if(t.includes('laminate')) return 'laminate';
+        if(t.includes('low')) return 'lowe';
+        if(t.includes('dgu')) return 'dgu';
+        return '';
       }
 
-      if(hamburger){
-        hamburger.addEventListener('click', function(e){ e.stopPropagation(); const open = hamburger.classList.toggle('open'); if(open){ mobilePanel && mobilePanel.classList.add('open'); document.body.style.overflow='hidden'; } else { mobilePanel && mobilePanel.classList.remove('open'); document.body.style.overflow=''; } });
-        $$('.mobile-panel a').forEach(a => a.addEventListener('click', function(){ document.querySelector('.mobile-panel')?.classList.remove('open'); document.querySelector('.hamburger')?.classList.remove('open'); document.body.style.overflow=''; }));
-        document.addEventListener('click', function(e){ if(!mobilePanel) return; if(!e.target.closest('.mobile-panel') && !e.target.closest('.hamburger')){ if(mobilePanel.classList.contains('open')){ mobilePanel.classList.remove('open'); hamburger.classList.remove('open'); document.body.style.overflow=''; } } });
+      function showPreview(title, key){
+        const preview = document.getElementById('product-preview');
+        const previewTitle = document.getElementById('preview-title');
+        const previewText = document.getElementById('preview-text');
+        if(!preview || !previewTitle || !previewText) return;
+
+        previewTitle.textContent = title || (key || 'Product');
+        previewText.textContent = summaries[key] || summaries[normalizeKey(title)] || 'Specification coming soon.';
+        preview.classList.add('open');
+        preview.setAttribute('aria-hidden','false');
+        preview.dataset.key = key || normalizeKey(title) || '';
       }
-    } catch(err){ window.__devLog && window.__devLog('Mega menu error: ' + err.message); }
-  });
-})();
 
-// Products: filters, accordion, modal, preview
-document.addEventListener('DOMContentLoaded', function(){
-  try {
-    const root = document.getElementById('products-showcase-improved');
-    if(!root) return;
-    const filtersNav = root.querySelector('.psi-filters');
-    const cards = Array.from(root.querySelectorAll('.psi-card'));
-    root.querySelectorAll('.psi-tab').forEach(t => { if(!t.dataset.filter){ t.dataset.filter = (t.textContent||'').trim().toLowerCase().replace(/\s+/g,'-') || 'all'; } });
+      function hidePreview(){
+        const preview = document.getElementById('product-preview');
+        if(!preview) return;
+        preview.classList.remove('open');
+        preview.setAttribute('aria-hidden','true');
+        preview.dataset.key = '';
+      }
 
-    filtersNav.addEventListener('click', function(e){
-      const btn = e.target.closest('.psi-tab');
-      if(!btn) return;
-      const filter = btn.dataset.filter || 'all';
-      root.querySelectorAll('.psi-tab').forEach(t => t.setAttribute('aria-selected', t.dataset.filter === filter ? 'true' : 'false'));
-      // Instead of removing from layout, add class 'hidden' that visually dims card
-      cards.forEach(c => {
-        const type = (c.dataset.type || 'all').toLowerCase();
-        if (filter === 'all' || type === filter) {
-          c.classList.remove('hidden');
-        } else {
-          c.classList.add('hidden');
+      document.addEventListener('DOMContentLoaded', function(){
+        try {
+          // Handle mega menu links (prevent navigation — show preview)
+          document.querySelectorAll('#mega .inner a, .mobile-panel a, .footer .footer-links').forEach(a=>{
+            a.addEventListener('click', function(e){
+              const rawText = (a.textContent || a.innerText || '').replace(/^\d+\)\s*/,'').trim();
+              const key = normalizeKey(rawText) || (a.getAttribute('href')||'').split('#')[1] || rawText.toLowerCase();
+              // if href points to another page (products.html) we still show preview and prevent default
+              e.preventDefault();
+              showPreview(rawText, key);
+            });
+          });
+
+          // When clicking card title or the primary button on card, show preview (don't open modal)
+          document.querySelectorAll('.psi-card').forEach(card=>{
+            const titleEl = card.querySelector('.psi-title');
+            const badge = card.querySelector('.psi-badge');
+            const type = card.dataset.type || '';
+            const short = card.querySelector('.psi-desc') ? card.querySelector('.psi-desc').innerText.trim() : '';
+            // clicking title shows preview
+            if(titleEl){
+              titleEl.style.cursor = 'pointer';
+              titleEl.addEventListener('click', function(e){
+                const title = titleEl.textContent.trim();
+                showPreview(title, type || normalizeKey(title));
+              });
+            }
+            // clicking the primary "psi-btn-primary" should open modal (existing behavior)
+            // but to allow preview when user clicks the secondary link text (if desired), also add:
+            const primaryBtn = card.querySelector('.psi-btn-primary');
+            if(primaryBtn){
+              // if user ctrl/cmd clicks or alt -> keep existing modal behaviour. We will still show preview on simple click while maintaining modal handler
+              primaryBtn.addEventListener('click', function(e){
+                // If it has dataset.title, show preview first (non-blocking); existing modal handler will still open afterwards because event bubbles
+                const title = primaryBtn.dataset.title || card.querySelector('.psi-title')?.textContent || '';
+                if(title){
+                  showPreview(title, primaryBtn.dataset.type || type || normalizeKey(title));
+                  // allow modal to open (existing click listeners will handle)
+                }
+              }, { passive: true });
+            }
+          });
+
+          // Preview controls
+          const previewClose = document.getElementById('preview-close');
+          const previewOpen = document.getElementById('preview-open');
+
+          previewClose && previewClose.addEventListener('click', function(){ hidePreview(); });
+
+          previewOpen && previewOpen.addEventListener('click', function(){
+            const preview = document.getElementById('product-preview');
+            if(!preview) return;
+            const key = preview.dataset.key;
+            // Try to find a card with matching data-type and focus/scroll to it
+            if(key){
+              const targetCard = document.querySelector('.psi-card[data-type="'+key+'"]');
+              if(targetCard){
+                hidePreview();
+                targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // highlight briefly
+                targetCard.style.transition = 'box-shadow .25s, transform .25s';
+                targetCard.style.transform = 'translateY(-4px)';
+                setTimeout(()=> targetCard.style.transform = '', 500);
+                return;
+              }
+              // fallback: try to navigate to anchor on page if exists
+              const anchor = document.getElementById(key) || document.querySelector('[id^="'+key+'"]');
+              if(anchor){
+                hidePreview();
+                anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+              }
+            }
+            // If no matching element, fallback to opening products page (original link)
+            hidePreview();
+            window.location.href = 'products.html#' + (key || '');
+          });
+
+          // Close preview when pressing Escape
+          document.addEventListener('keydown', function(e){
+            if(e.key === 'Escape' || e.key === 'Esc') hidePreview();
+          });
+
+          // Close preview on outside clicks (but ignore clicks inside preview)
+          document.addEventListener('click', function(e){
+            const preview = document.getElementById('product-preview');
+            if(!preview || !preview.classList.contains('open')) return;
+            if(e.target.closest('#product-preview')) return;
+            // if clicking a product link or card, we want preview to remain (those handlers call showPreview)
+            const isProductTarget = !!e.target.closest('.psi-card, #mega .inner a, .mobile-panel a, .footer .footer-links');
+            if(isProductTarget) return;
+            hidePreview();
+          });
+
+        } catch(err){
+          window.__devLog && window.__devLog('Preview init error: ' + (err && err.message));
         }
       });
-      const first = root.querySelector('.psi-card:not(.hidden)');
-      if(first) first.focus({preventScroll:true});
-    });
-
-    // accordions
-    root.querySelectorAll('.psi-accordion-toggle').forEach(btn => {
-      const id = btn.getAttribute('aria-controls');
-      const panel = root.querySelector('#' + id);
-      if(!panel) return;
-      panel.hidden = true;
-      btn.setAttribute('aria-expanded','false');
-      btn.addEventListener('click', function(){
-        const open = btn.getAttribute('aria-expanded') === 'true';
-        btn.setAttribute('aria-expanded', String(!open));
-        panel.hidden = open;
-      });
-    });
-
-    // modal elements
-    const modalBackdrop = document.getElementById('psiModalBackdrop');
-    const modalHeading = document.getElementById('psiModalHeading');
-    const modalCopy = document.getElementById('psiModalCopy');
-    const modalMedia = document.getElementById('psiModalMedia');
-    const modalPrimary = document.getElementById('psiModalPrimary');
-    const modalClose = document.getElementById('psiModalClose');
-
-    function openModal({ title = '', type = 'product', image = '', href = '#' } = {}){ 
-      modalHeading.textContent = title;
-      modalCopy.textContent = 'Detailed information about ' + title + '. Contact us for specs, samples and pricing.';
-      modalMedia.style.backgroundImage = image ? `url('${image}')` : '';
-      modalPrimary.href = href;
-      modalPrimary.textContent = 'View ' + (type === 'dgu' ? 'DGU Options' : 'Product page');
-      modalBackdrop.classList.add('open');
-      modalBackdrop.setAttribute('aria-hidden','false');
-      modalClose.focus();
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal(){ modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
-
-    // open modal when clicking psi-open-detail
-    root.addEventListener('click', function(e){
-      const btn = e.target.closest('.psi-open-detail');
-      if(!btn) return;
-      const title = btn.dataset.title || 'Product';
-      const type = btn.dataset.type || 'product';
-      const img = btn.dataset.img || '';
-      const href = btn.dataset.href || ('products.html#' + (type || 'product'));
-      openModal({ title, type, image: img, href });
-    });
-
-    // psi-btn-primary click: open modal by default, ctrl/cmd => navigate
-    root.addEventListener('click', function(e){
-      const btn = e.target.closest('.psi-btn-primary');
-      if(!btn) return;
-      const href = btn.dataset.href || ('products.html#' + (btn.dataset.type || 'product'));
-      if(e.ctrlKey || e.metaKey || e.shiftKey){ window.location.href = href; return; }
-      if(btn.dataset && btn.dataset.title){
-        const title = btn.dataset.title || 'Product';
-        const type = btn.dataset.type || 'product';
-        const img = btn.dataset.img || '';
-        openModal({ title, type, image: img, href });
-      }
-    });
-
-    modalClose && modalClose.addEventListener('click', closeModal);
-    modalBackdrop && modalBackdrop.addEventListener('click', function(e){ if(e.target === modalBackdrop) closeModal(); });
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modalBackdrop.classList.contains('open')) closeModal(); });
-
-    // Preview wiring
-    const summaries = {
-      "laminate": "Multi-layer laminated glass engineered for occupant protection and noise control — bespoke thicknesses & interlayers.",
-      "acoustic": "Specialised laminates designed to reduce reverberation and improve room acoustics for commercial and residential projects.",
-      "lowe": "High performance Low-E coatings and single glazed options for solar control and improved thermal performance.",
-      "security": "Security-grade laminates for forced entry resistance, ballistic and impact-rated applications.",
-      "mirror": "High quality mirrors for interior, architectural and display use — various finishes and backing options.",
-      "oneway": "One-way vision systems for observation rooms, security and privacy applications.",
-      "merch": "Display glass and fabricated merchandising solutions for retail and exhibition environments.",
-      "sheets": "Flat glass sheets available in a range of thicknesses for fabrication and finishing.",
-      "blocks": "Solid glass blocks for architectural features, partitions and light-transmitting walls.",
-      "toughened": "Tempered glass with certified impact resistance — ideal for doors, façades and balustrades.",
-      "dgu": "Double glazed unit options for thermal performance and solar control. Choose from clear on clear, E-tech and ThermaLux ranges."
-    };
-
-    function normalizeKey(text){
-      if(!text) return '';
-      let t = text.trim().toLowerCase();
-      t = t.replace(/\b(low[\s-]*e|low[-\s]*e)\b/,'lowe');
-      t = t.replace(/\b(one[\s-]*way|one[-\s]*way)\b/,'oneway');
-      t = t.replace(/\s+/g,' ');
-      for(const k of Object.keys(summaries)){ if(t.includes(k)) return k; }
-      if(t.includes('laminate')) return 'laminate';
-      if(t.includes('low')) return 'lowe';
-      if(t.includes('dgu')) return 'dgu';
-      return '';
-    }
-
-    function showPreview(title, key){
-      const preview = document.getElementById('product-preview');
-      const previewTitle = document.getElementById('preview-title');
-      const previewText = document.getElementById('preview-text');
-      if(!preview || !previewTitle || !previewText) return;
-      previewTitle.textContent = title || (key || 'Product');
-      previewText.textContent = summaries[key] || summaries[normalizeKey(title)] || 'Specification coming soon.';
-      preview.classList.add('open');
-      preview.setAttribute('aria-hidden','false');
-      preview.dataset.key = key || normalizeKey(title) || '';
-    }
-
-    function hidePreview(){
-      const preview = document.getElementById('product-preview');
-      if(!preview) return;
-      preview.classList.remove('open');
-      preview.setAttribute('aria-hidden','true');
-      preview.dataset.key = '';
-    }
-
-    // mega links + footer links show preview
-    document.querySelectorAll('#mega .inner a, .mobile-panel a, .footer .footer-links').forEach(a=>{
-      a.addEventListener('click', function(e){
-        const rawText = (a.textContent || a.innerText || '').replace(/^\d+\)\s*/,'').trim();
-        const key = normalizeKey(rawText) || (a.getAttribute('href')||'').split('#')[1] || rawText.toLowerCase();
-        e.preventDefault();
-        showPreview(rawText, key);
-      });
-    });
-
-    // clicking product title => preview
-    document.querySelectorAll('.psi-card').forEach(card=>{
-      const titleEl = card.querySelector('.psi-title');
-      const type = card.dataset.type || '';
-      if(titleEl){
-        titleEl.style.cursor = 'pointer';
-        titleEl.addEventListener('click', function(e){
-          const title = titleEl.textContent.trim();
-          showPreview(title, type || normalizeKey(title));
-        });
-      }
-      const primaryBtn = card.querySelector('.psi-btn-primary');
-      if(primaryBtn){
-        primaryBtn.addEventListener('click', function(e){
-          const title = primaryBtn.dataset.title || card.querySelector('.psi-title')?.textContent || '';
-          if(title){ showPreview(title, primaryBtn.dataset.type || type || normalizeKey(title)); }
-        }, { passive: true });
-      }
-    });
-
-    const previewClose = document.getElementById('preview-close');
-    const previewOpen = document.getElementById('preview-open');
-    previewClose && previewClose.addEventListener('click', function(){ hidePreview(); });
-
-    previewOpen && previewOpen.addEventListener('click', function(){
-      const preview = document.getElementById('product-preview');
-      if(!preview) return;
-      const key = preview.dataset.key;
-      if(key){
-        const targetCard = document.querySelector('.psi-card[data-type="'+key+'"]');
-        if(targetCard){
-          hidePreview();
-          targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          targetCard.style.transition = 'box-shadow .25s, transform .25s';
-          targetCard.style.transform = 'translateY(-4px)';
-          setTimeout(()=> targetCard.style.transform = '', 500);
-          return;
-        }
-        const anchor = document.getElementById(key) || document.querySelector('[id^="'+key+'"]');
-        if(anchor){ hidePreview(); anchor.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
-      }
-      hidePreview();
-      window.location.href = 'products.html#' + (key || '');
-    });
-
-    // ESC to close preview
-    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' || e.key === 'Esc') hidePreview(); });
-
-    // Close preview on outside clicks (ignore inside)
-    document.addEventListener('click', function(e){
-      const preview = document.getElementById('product-preview');
-      if(!preview || !preview.classList.contains('open')) return;
-      if(e.target.closest('#product-preview')) return;
-      const isProductTarget = !!e.target.closest('.psi-card, #mega .inner a, .mobile-panel a, .footer .footer-links');
-      if(isProductTarget) return;
-      hidePreview();
-    });
-
-  } catch(err){ window.__devLog && window.__devLog('Products script error: ' + err.message); }
-});
-
-</script>
+    })();
+  </script>
   <!-- ================== END ADDED SCRIPT ================== -->
 
   <script>
