@@ -1,109 +1,281 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Contact</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="header" role="banner">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="stylesheet" href="styles.css"/>
+<title>Contact — Davis Glass (Minimal)</title>
+<style>
+  :root{--accent:#8A1C26;--muted:#6b7280;--bg:#f6f7f8}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:#071024}
+  .wrap{max-width:1200px;margin:28px auto;padding:18px}
+  h1{color:var(--accent);margin:0 0 8px 0}
+  p.lead{color:var(--muted);margin:0 0 12px 0}
+  .row{display:flex;gap:12px}
+  .card{background:#fff;padding:14px;border-radius:8px;border:1px solid #eee}
+  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  input,select,textarea{width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-size:14px}
+  textarea{min-height:100px;resize:vertical}
+  .btn{padding:9px 12px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
+  .primary{background:var(--accent);color:#fff}
+  .ghost{background:#fff;border:1px solid #ddd;color:var(--accent)}
+  .files{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+  .file-pill{background:#fafafa;padding:6px 8px;border-radius:8px;border:1px solid #eee;font-size:13px}
+  .map{margin-top:14px;border-radius:8px;overflow:hidden;border:1px solid #eee;height:260px}
+  .modal{display:none;position:fixed;inset:0;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);z-index:999}
+  .modal .box{background:#fff;padding:14px;border-radius:8px;max-width:520px;width:94%}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:18px;background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;display:none}
+  .muted{color:var(--muted);font-size:13px}
+  .help{font-size:12px;color:#999;margin-top:8px}
+</style>
+</head>
+<body>
+  <div id="header"></div>
   <div class="wrap">
-    <div class="logo"><a href="home.html"><img src="https://www.davisglass.com.au/images/stat_imgs/TEMP-davis-glass-logo-header-WBG.jpg" alt="Davis Glass"></a></div>
-    <nav class="nav" role="navigation" aria-label="Main navigation">
-      <ul class="nav-list">
-        <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
-        <li class="nav-item has-mega">
-          <button class="nav-btn" aria-expanded="false">Products ▾</button>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-    <button class="hamburger" aria-label="Menu" aria-expanded="false">
-      <span class="bar bar1"></span><span class="bar bar2"></span><span class="bar bar3"></span>
-    </button>
+
+    <header style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><strong style="color:var(--accent)">Davis Glass</strong></div>
+        <div class="muted">Mon–Fri 09:00–17:00</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="card" style="margin-bottom:12px">
+        <h1>Contact Davis Glass</h1>
+        <p class="lead">Quick quote, drawings or technical support — send a message and we’ll respond.</p>
+
+        <div style="margin-top:8px;display:flex;gap:8px">
+          <button id="openQuick" class="btn ghost">Quick contact</button>
+          <button id="openAppt" class="btn ghost">Book appointment</button>
+          <a class="btn ghost" href="mailto:info@davisglass.com.au">Email sales</a>
+        </div>
+      </section>
+
+      <section class="row" style="gap:18px;align-items:flex-start">
+        <aside class="card" style="width:300px;flex-shrink:0">
+          <h3 style="margin-top:0;color:var(--accent)">Office</h3>
+          <div style="margin-bottom:8px"><strong>Address</strong><div class="muted">156 Melrose Drive<br>Tullamarine VIC 3043</div></div>
+          <div style="margin-bottom:8px"><strong>Phone</strong><div class="muted">(03) 9330 1200</div></div>
+          <div style="margin-bottom:8px"><strong>Email</strong><div class="muted">info@davisglass.com.au</div></div>
+          <div style="margin-top:8px"><button id="vcard" class="btn ghost">Download vCard</button></div>
+        </aside>
+
+        <div style="flex:1">
+          <section class="card">
+            <h3 style="margin-top:0;color:var(--accent)">Send us a message</h3>
+
+            <form id="form" autocomplete="off">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div><label for="name">Full name</label><input id="name" name="name" type="text" required></div>
+                <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel"></div>
+                <div style="grid-column:1/3"><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+              </div>
+
+              <div style="margin-top:10px"><label for="message">Message</label><textarea id="message" name="message" required></textarea></div>
+
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                <input id="fileInput" type="file" style="display:none">
+                <button type="button" id="attachBtn" class="btn ghost">Attach file</button>
+                <div id="files" class="files" aria-live="polite"></div>
+                <div style="margin-left:auto" class="muted">Max 10MB</div>
+              </div>
+
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;flex-wrap:wrap">
+                <div><input id="cc" type="checkbox"><label for="cc"> Send me a copy</label></div>
+                <div style="display:flex;gap:8px">
+                  <button type="submit" class="btn primary">Send</button>
+                  <button type="button" id="mailtoBtn" class="btn ghost">Open email</button>
+                </div>
+              </div>
+
+              <div id="status" class="help"></div>
+            </form>
+          </section>
+
+          <div class="map card" aria-label="map" style="margin-top:12px">
+            <iframe title="map" style="width:100%;height:100%;border:0;min-height:220px" src="https://www.google.com/maps?q=156+Melrose+Drive+Tullamarine+VIC+3043&output=embed"></iframe>
+          </div>
+
+          <div class="faq card" style="margin-top:12px">
+            <h4 style="margin:0 0 8px 0;color:var(--accent)">FAQ</h4>
+            <div>
+              <div class="faq-item"><div class="faq-q" style="display:flex;justify-content:space-between;cursor:pointer"><span>Do you supply homeowners?</span><span>▾</span></div><div class="faq-a muted" style="display:none;margin-top:6px">We supply to trade only — homeowners please contact local installers.</div></div>
+              <div style="height:8px"></div>
+              <div class="faq-item"><div class="faq-q" style="display:flex;justify-content:space-between;cursor:pointer"><span>Delivery areas?</span><span>▾</span></div><div class="faq-a muted" style="display:none;margin-top:6px">Victoria and selected interstate regions; call for urgent delivery.</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer style="margin-top:12px" class="muted">© Davis Glass — 156 Melrose Drive, Tullamarine VIC 3043</footer>
+    </main>
   </div>
 
-  <!-- Mega panel - full height dark overlay under header -->
-  <div class="mega-panel" aria-hidden="true">
-    <div class="backdrop" aria-hidden="true"></div>
-    <div class="inner">
-      <div class="mega-col">
-        <h4>PRODUCTS</h4>
-        <ul>
-          <li><a href="products.html#laminate">Laminate</a></li>
-          <li><a href="products.html#acoustic">Acoustic Laminate</a></li>
-          <li><a href="products.html#lowe">Low e (Low Emissivity)</a></li>
-          <li><a href="products.html#security">Security Laminate</a></li>
-          <li><a href="products.html#mirror">Mirror</a></li>
-          <li><a href="products.html#oneway">One way mirror</a></li>
-        </ul>
-      </div>
-      <div class="mega-col">
-        <h4>MERCHANDISING & SAFETY</h4>
-        <ul>
-          <li><a href="products.html#merch">Merchandising</a></li>
-          <li><a href="products.html#sheets">Sheets</a></li>
-          <li><a href="products.html#blocks">Blocks</a></li>
-          <li><a href="products.html#toughened">Toughened Safety Glass</a></li>
-          <li><a href="products.html#dgu">DGU’s</a></li>
-        </ul>
-        <h4 style="margin-top:14px">DGU Types</h4>
-        <ul>
-          <li><a href="products.html#dguclear">clear on clear</a></li>
-          <li><a href="products.html#dgue">E-tech on clear</a></li>
-          <li><a href="products.html#thermalux">ThermaLux</a></li>
-          <li><a href="products.html#thermaluxplus">ThermaLux Plus</a></li>
-          <li><a href="products.html#thermale">ThermaLux Elite</a></li>
-        </ul>
-      </div>
-      <div class="mega-right">
-        <div class="feature-box">
-          <h4>High performance & partners</h4>
-          <p>High performance Low‑E single glazed options. Partners: Soltech (Viridian?), Evantage. Download spec sheets and product guides for design and performance data.</p>
-        </div>
-        <div class="feature-box">
-          <h4>Need help?</h4>
-          <p>Contact our technical team for specification support and sample requests: <a href="mailto:sales@davisglass.com.au">sales@davisglass.com.au</a></p>
-        </div>
-      </div>
+  <!-- modals -->
+  <div id="quickModal" class="modal" role="dialog" aria-modal="true">
+    <div class="box">
+      <div style="display:flex;justify-content:space-between;align-items:center"><strong>Quick contact</strong><button id="closeQuick" class="btn">✕</button></div>
+      <form id="quickForm" style="margin-top:8px">
+        <input name="qname" placeholder="Name" style="width:100%;padding:8px;margin-bottom:8px">
+        <input name="qemail" placeholder="Email" type="email" style="width:100%;padding:8px;margin-bottom:8px">
+        <textarea name="qmsg" placeholder="Message" style="width:100%;padding:8px"></textarea>
+        <div style="text-align:right;margin-top:8px"><button class="btn primary" type="submit">Send</button></div>
+      </form>
     </div>
   </div>
 
-  <!-- Mobile panel -->
-  <div class="mobile-panel" aria-hidden="true">
-    <ul class="mobile-list">
-      <li class="mobile-item"><a href="home.html">Home</a></li>
-      <li class="mobile-item"><a href="products.html">Products</a></li>
-      <li class="mobile-item"><a href="about.html">About</a></li>
-      <li class="mobile-item"><a href="resources.html">Resources</a></li>
-      <li class="mobile-item"><a href="contact.html">Contact</a></li>
-    </ul>
-  </div>
-</header>
-<main class="content-gap container"><h2>Contact</h2><p>Email: sales@davisglass.com.au</p></main>
-<footer class="footer">
-  <div class="grid">
-    <div class="brand">
-      <img src="https://www.davisglass.com.au/images/stat_imgs/TEMP-davis-glass-logo-header-WBG.jpg" alt="logo">
-      <p style="margin-top:8px;color:#cbd7e2">Davis Glass — Architectural & performance glass. Technical support and product specs for designers and fabricators.</p>
-      <div style="margin-top:12px;">
-        <strong>Follow us</strong><br/>
-        <a href="#" style="margin-right:8px;color:#cbd7e2">Twitter</a><a href="#" style="margin-right:8px;color:#cbd7e2">LinkedIn</a><a href="#" style="color:#cbd7e2">Instagram</a>
-      </div>
-    </div>
-    <div class="links">
-      <strong style="color:#e6eef6">Products</strong>
-      <a class="footer-links" href="products.html#laminate">Laminate</a>
-      <a class="footer-links" href="products.html#lowe">Low‑E</a>
-      <a class="footer-links" href="products.html#dgu">DGU</a>
-      <a class="footer-links" href="products.html#toughened">Toughened</a>
-    </div>
-    <div class="contact">
-      <strong style="color:#e6eef6">Contact</strong>
-      <div class="footer-contact">(03) 9330 1200</div>
-      <div class="footer-contact">156 Melrose Drive, Tullamarine VIC 3043</div>
-      <div class="newsletter" style="margin-top:12px">
-        <form onsubmit="event.preventDefault();alert('Thanks — demo.');">
-          <label for="email" style="color:#e6eef6">Newsletter</label><br/>
-          <input id="email" placeholder="you@company.com"><button type="submit">Subscribe</button>
-        </form>
-      </div>
+  <div id="apptModal" class="modal" role="dialog" aria-modal="true">
+    <div class="box">
+      <div style="display:flex;justify-content:space-between;align-items:center"><strong>Book appointment</strong><button id="closeAppt" class="btn">✕</button></div>
+      <form id="apptForm" style="margin-top:8px">
+        <input name="adate" type="date" style="width:48%;padding:8px;margin-right:4%"><input name="atime" type="time" style="width:48%;padding:8px"><input name="aname" placeholder="Your name" style="width:100%;padding:8px;margin-top:8px">
+        <div style="text-align:right;margin-top:8px"><button class="btn primary" type="submit">Request</button></div>
+      </form>
     </div>
   </div>
-</footer>
-<script src="scripts.js"></script></body></html>
+
+  <div id="toast" class="toast">Opening mail client…</div>
+
+   <div id="footer"></div>
+   <script src="header-footer.js"></script>
+
+<script>
+(function(){
+  // Simple DOM helpers
+  const qs = s => document.querySelector(s);
+  const qsa = s => Array.from(document.querySelectorAll(s));
+
+  // Elements
+  const form = qs('#form');
+  const status = qs('#status');
+  const fileInput = qs('#fileInput');
+  const attachBtn = qs('#attachBtn');
+  const filesBox = qs('#files');
+  const toast = qs('#toast');
+  const mailtoBtn = qs('#mailtoBtn');
+
+  // File attach preview
+  attachBtn.addEventListener('click', ()=> fileInput.click());
+  fileInput.addEventListener('change', ()=> {
+    filesBox.innerHTML = '';
+    Array.from(fileInput.files).forEach(f => {
+      const d = document.createElement('div'); d.className='file-pill'; d.textContent = f.name;
+      filesBox.appendChild(d);
+    });
+  });
+
+  // Form submit -> mailto fallback
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    status.textContent = '';
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const message = form.message.value.trim();
+    if(!name || !email || !message){
+      status.style.color = '#b91c1c';
+      status.textContent = 'Please complete name, email and message.';
+      return;
+    }
+    const subject = encodeURIComponent('Website enquiry — ' + name);
+    const body = encodeURIComponent('Name: ' + name + '\\nEmail: ' + email + '\\nPhone: ' + (form.phone.value||'') + '\\n\\n' + message);
+    const mailto = 'mailto:info@davisglass.com.au?subject=' + subject + '&body=' + body + (qs('#cc').checked ? '&cc=' + encodeURIComponent(email) : '');
+    // show toast & navigate
+    showToast('Opening mail client…');
+    window.location.href = mailto;
+    status.style.color = 'var(--muted)';
+    status.textContent = 'Opening your email client…';
+    form.reset();
+    filesBox.innerHTML = '';
+  });
+
+  // explicit open email button (same behavior)
+  mailtoBtn.addEventListener('click', ()=> {
+    const mailto = 'mailto:info@davisglass.com.au';
+    showToast('Opening mail client…');
+    window.location.href = mailto;
+  });
+
+  // Quick contact modal
+  const quickModal = qs('#quickModal'), apptModal = qs('#apptModal');
+  qs('#openQuick').addEventListener('click', ()=> { quickModal.style.display='flex'; quickModal.querySelector('input')?.focus(); });
+  qs('#closeQuick').addEventListener('click', ()=> quickModal.style.display='none');
+  qs('#quickForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const n = this.qname.value.trim(), em = this.qemail.value.trim(), m = this.qmsg.value.trim();
+    if(!n||!em||!m){ alert('Please complete all fields'); return; }
+    const subj = encodeURIComponent('Quick enquiry — ' + n);
+    const body = encodeURIComponent('Name: ' + n + '\\nEmail: ' + em + '\\n\\n' + m);
+    showToast('Opening mail client…');
+    window.location.href = 'mailto:info@davisglass.com.au?subject=' + subj + '&body=' + body;
+    quickModal.style.display='none';
+  });
+
+  // Appointment modal
+  qs('#openAppt').addEventListener('click', ()=> { apptModal.style.display='flex'; apptModal.querySelector('input')?.focus(); });
+  qs('#closeAppt').addEventListener('click', ()=> apptModal.style.display='none');
+  qs('#apptForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const date = this.adate.value, time = this.atime.value, name = this.aname.value || 'Client';
+    if(!date || !time){ alert('Choose date and time'); return; }
+    const subj = encodeURIComponent('Appointment request — ' + name);
+    const body = encodeURIComponent('Request appointment:\\nDate: ' + date + '\\nTime: ' + time + '\\nName: ' + name);
+    showToast('Opening mail client…');
+    window.location.href = 'mailto:info@davisglass.com.au?subject=' + subj + '&body=' + body;
+    apptModal.style.display='none';
+  });
+
+  // FAQ toggles
+  qsa('.faq-item').forEach(item=>{
+    item.querySelector('.faq-q').addEventListener('click', ()=> {
+      const a = item.querySelector('.faq-a');
+      a.style.display = a.style.display === 'block' ? 'none' : 'block';
+    });
+  });
+
+  // vCard
+  qs('#vcard').addEventListener('click', ()=> {
+    const v = [
+      'BEGIN:VCARD','VERSION:3.0','N:;Davis Glass;;;','FN:Davis Glass','ORG:Davis Glass',
+      'TEL;WORK:(03) 9330 1200','EMAIL:info@davisglass.com.au',
+      'ADR:;;156 Melrose Drive;Tullamarine;VIC;3043;Australia','END:VCARD'
+    ].join('\\n');
+    const blob = new Blob([v], { type: 'text/vcard' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'davisglass.vcf'; document.body.appendChild(a); a.click();
+    setTimeout(()=> URL.revokeObjectURL(url), 3000);
+  });
+
+  // small toast helper
+  function showToast(msg){
+    toast.textContent = msg; toast.style.display = 'block';
+    setTimeout(()=> toast.style.display = 'none', 2600);
+  }
+
+  // Progressive: if there is an external header/footer your site injects, they won't break this file.
+  console.log('Minimal contact page loaded — test by clicking Send (it should open your mail client).');
+
+})();
+</script>
+  <script>
+    function disableinspectelement(){
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.keyCode == 123) {
+            e.preventDefault();
+        }
+        if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) {
+            e.preventDefault();
+        }
+        if (e.ctrlKey && (e.keyCode == 'U'.charCodeAt(0))) {
+            e.preventDefault();
+        }
+    });
+}
+disableinspectelement();
+  </script>
+</body>
+</html>
