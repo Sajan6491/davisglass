@@ -16,13 +16,14 @@
     .res-page {
       --res-brand: #a32035;       /* Davis Glass logo red */
       --res-brand-dark: #7f0f24;
-      --res-brand-soft: #fbeaec;
-      --res-text-main: #0f172a;
+      --res-text-main: #111827;
       --res-text-muted: #4b5563;
       --res-border: #e5e7eb;
       --res-bg-soft: #f8fafc;
-      font-size: 15px;
-      line-height: 1.65;
+      --res-pill-bg: #ffffff;
+
+      font-size: 16px;
+      line-height: 1.7;
       color: var(--res-text-main);
       background: #ffffff;
     }
@@ -36,28 +37,29 @@
     /* ===== HERO / INTRO ===== */
 
     .res-hero {
-      padding: 120px 0 60px; /* a touch more bottom space */
+      padding: 120px 0 70px;
       background:
-        radial-gradient(circle at top left, rgba(163,32,53,0.16), transparent 60%),
-        linear-gradient(180deg, #fbf4f7, #f4f6fb);
+        radial-gradient(circle at top left, rgba(163,32,53,0.12), transparent 60%),
+        linear-gradient(180deg, #fbf4f7, #f5f7fb);
       border-bottom: 1px solid var(--res-border);
     }
 
     .res-hero-inner {
-      max-width: 1200px;
-      margin: 0 auto; 
-      padding: 0 24px;
+      max-width: 1150px;
+      margin: 0 auto;
     }
 
     .res-breadcrumb {
       font-size: 13px;
       color: #6b7280;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
+
     .res-breadcrumb a {
       color: inherit;
       text-decoration: none;
     }
+
     .res-breadcrumb a:hover {
       text-decoration: underline;
     }
@@ -67,42 +69,42 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #7f868c;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .res-title {
-      font-size: clamp(2.2rem, 3.1vw, 2.6rem);
+      font-size: clamp(2.3rem, 3.1vw, 2.7rem);
       font-weight: 700;
-      line-height: 1.15;
-      margin: 0 0 10px;
+      line-height: 1.18;
+      margin: 0 0 14px;
       max-width: 26ch;
     }
 
     .res-intro {
-      max-width: 42rem;
+      max-width: 46rem;
       color: var(--res-text-muted);
-      margin: 0 0 20px;
+      margin: 0 0 22px;
       font-size: 0.98rem;
     }
 
     .res-meta-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
     }
 
     .res-pill {
-      padding: 6px 13px;
+      padding: 7px 14px;
       border-radius: 999px;
       border: 1px solid #cbd5e1;
-      background: #ffffff;
+      background: var(--res-pill-bg);
       font-size: 0.78rem;
       color: #475569;
       white-space: nowrap;
-      transition: background .16s ease, border-color .16s ease, color .16s ease;
+      transition: border-color 0.16s ease, color 0.16s ease;
     }
+
     .res-pill:hover {
-      background: #ffffff;
       border-color: var(--res-brand);
       color: var(--res-brand);
     }
@@ -110,32 +112,32 @@
     /* ===== MAIN WRAPPER ===== */
 
     .res-main {
-      padding: 38px 0 72px;
+      padding: 40px 0 80px;
       background: #ffffff;
     }
 
     /* ===== SEARCH + FILTERS BAR ===== */
 
     .res-toolbar {
-      padding: 0 0 20px;
+      padding: 0 0 22px;
       border-bottom: 1px solid var(--res-border);
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 4px;
+      margin-bottom: 10px;
     }
 
     .res-search {
       flex: 1 1 260px;
       display: flex;
-      max-width: 420px;
+      max-width: 440px;
     }
 
     .res-search input {
       flex: 1;
-      padding: 10px 13px;
+      padding: 11px 14px;
       border: 1px solid var(--res-border);
       border-radius: 999px 0 0 999px;
       font-size: 0.9rem;
@@ -146,7 +148,7 @@
       border: 1px solid var(--res-border);
       border-left: 0;
       border-radius: 0 999px 999px 0;
-      padding: 10px 14px;
+      padding: 11px 18px;
       background: var(--res-brand);
       color: #fff;
       font-size: 0.9rem;
@@ -165,11 +167,11 @@
       background: #ffffff;
       border: 1px solid var(--res-border);
       border-radius: 999px;
-      padding: 6px 14px;
+      padding: 7px 15px;
       font-size: 0.82rem;
       color: #6b7280;
       cursor: pointer;
-      transition: all .18s ease;
+      transition: all 0.18s ease;
       white-space: nowrap;
     }
 
@@ -190,15 +192,13 @@
     .res-featured {
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
-      gap: 28px;
+      gap: 30px;
       border-radius: 20px;
       border: 1px solid var(--res-border);
-      padding: 22px 22px 20px;
-      margin: 28px 0 30px;
-      background:
-        radial-gradient(circle at top left, rgba(163,32,53,0.12), transparent 55%),
-        linear-gradient(135deg, #ffffff, #f9fafb);
-      box-shadow: 0 16px 40px rgba(15,23,42,0.10);
+      padding: 24px 24px 22px;
+      margin: 28px 0 32px;
+      background: linear-gradient(135deg, #ffffff, #f9fafb);
+      box-shadow: 0 14px 32px rgba(15,23,42,0.08);
     }
 
     .res-featured-tag {
@@ -206,7 +206,7 @@
       text-transform: uppercase;
       letter-spacing: 0.16em;
       color: #9ca3af;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
 
     .res-featured h2 {
@@ -224,7 +224,7 @@
     .res-featured-meta {
       font-size: 0.82rem;
       color: #6b7280;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .res-featured-actions {
@@ -234,7 +234,6 @@
       margin-top: 6px;
     }
 
-    /* button tweaks inside resources page */
     .res-btn {
       padding: 9px 20px;
       border-radius: 999px;
@@ -242,7 +241,7 @@
     }
 
     .res-featured-media {
-      border-radius: 16px;
+      border-radius: 18px;
       overflow: hidden;
       border: 1px solid #d1d5db;
       background: #d4d9e5;
@@ -253,7 +252,7 @@
     .res-featured-media img {
       width: 100%;
       height: 100%;
-      max-height: 230px;
+      max-height: 240px;
       object-fit: cover;
       display: block;
     }
@@ -269,11 +268,37 @@
       border-radius: 999px;
     }
 
-    /* ===== QUICK CATEGORY ROW (NEW) ===== */
+    /* >>> SPECIAL BUTTON STYLE INSIDE FEATURED CARD <<< */
+    .res-featured .btn.brand-primary {
+      background: var(--res-brand);
+      border-color: var(--res-brand);
+      color: #ffffff;
+      box-shadow: 0 10px 24px rgba(89,10,21,0.45);
+    }
+
+    .res-featured .btn.brand-primary:hover {
+      background: var(--res-brand-dark);
+      border-color: var(--res-brand-dark);
+      box-shadow: 0 14px 30px rgba(89,10,21,0.55);
+    }
+
+    .res-featured .btn.ghost {
+      background: #ffffff;
+      border: 1px solid rgba(163,32,53,0.7);
+      color: var(--res-brand-dark);
+    }
+
+    .res-featured .btn.ghost:hover {
+      background: #fdf2f5;
+      border-color: var(--res-brand);
+    }
+    /* ================================================== */
+
+    /* ===== QUICK CATEGORY ROW ===== */
 
     .res-cats {
-      margin: 6px 0 30px;
-      padding-top: 10px;
+      margin: 4px 0 28px;
+      padding-top: 14px;
       border-top: 1px dashed var(--res-border);
     }
 
@@ -285,7 +310,7 @@
     }
 
     .res-cats-head h2 {
-      font-size: 1.05rem;
+      font-size: 1.04rem;
       margin: 0;
     }
 
@@ -312,7 +337,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: all .18s ease;
+      transition: all 0.18s ease;
     }
 
     .res-cat span {
@@ -328,10 +353,10 @@
       color: var(--res-brand-dark);
     }
 
-    /* ===== “POPULAR RIGHT NOW” STRIP (NEW) ===== */
+    /* ===== “POPULAR RIGHT NOW” STRIP ===== */
 
     .res-popular {
-      margin: 0 0 28px;
+      margin: 0 0 30px;
       padding: 14px 16px;
       border-radius: 14px;
       background: #fef2f2;
@@ -372,8 +397,7 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 18px;
-      margin-top: 6px;
+      margin-bottom: 20px;
     }
 
     .res-section-heading h2 {
@@ -399,13 +423,15 @@
       border: 1px solid var(--res-border);
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(15,23,42,0.06);
-      transition: transform .18s ease, box-shadow .18s ease;
+      box-shadow: 0 8px 22px rgba(15,23,42,0.06);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      position: relative;
     }
 
     .res-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(15,23,42,0.12);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 34px rgba(15,23,42,0.1);
+      border-color: #cbd5e1;
     }
 
     .res-thumb {
@@ -415,7 +441,7 @@
 
     .res-thumb img {
       width: 100%;
-      height: 155px;
+      height: 160px;
       object-fit: cover;
       display: block;
     }
@@ -434,7 +460,7 @@
     }
 
     .res-card-body {
-      padding: 15px 16px 16px;
+      padding: 16px 16px 17px;
       display: flex;
       flex-direction: column;
       flex: 1;
@@ -449,15 +475,14 @@
     .res-card-meta {
       font-size: 0.8rem;
       color: #9ca3af;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
     }
 
     .res-card-body p {
       flex: 1;
-      margin: 0 0 12px;
+      margin: 0 0 13px;
       color: var(--res-text-muted);
       font-size: 0.9rem;
-      line-height: 1.6;
     }
 
     .res-card-body a {
@@ -470,11 +495,22 @@
       font-size: 0.84rem;
     }
 
+    .res-download-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--res-brand);
+      color: #fff;
+      font-size: 0.68rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+
     /* ===== BOTTOM HELP STRIP ===== */
 
     .res-help {
-      margin-top: 40px;
-      padding: 18px 18px 20px;
+      margin-top: 42px;
+      padding: 20px 20px 22px;
       border-radius: 18px;
       border: 1px solid var(--res-border);
       background: var(--res-bg-soft);
@@ -490,7 +526,7 @@
     }
 
     .res-help-text h3 {
-      margin: 0 0 4px;
+      margin: 0 0 5px;
       font-size: 1.02rem;
     }
 
@@ -506,11 +542,35 @@
       gap: 10px;
     }
 
+    /* ===== VIDEO MODAL ===== */
+
+    .res-video-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .res-video-modal.open {
+      display: flex;
+    }
+
+    .res-video-box {
+      background: #000;
+      max-width: 720px;
+      width: 92%;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
     /* ===== RESPONSIVE ===== */
 
     @media (max-width: 900px) {
       .res-hero {
-        padding: 100px 0 40px;
+        padding: 100px 0 46px;
       }
       .res-toolbar {
         flex-direction: column;
@@ -521,6 +581,9 @@
       }
       .res-featured {
         grid-template-columns: minmax(0, 1fr);
+      }
+      .res-featured-media {
+        order: -1;
       }
       .res-help {
         align-items: flex-start;
@@ -535,12 +598,12 @@
       .res-search {
         max-width: 100%;
       }
-      .res-card img {
-        height: 140px;
-      }
       .res-popular {
         flex-direction: column;
         align-items: flex-start;
+      }
+      .res-card img {
+        height: 150px;
       }
     }
   </style>
@@ -619,7 +682,7 @@
           </div>
         </article>
 
-        <!-- QUICK CATEGORY ROW (NEW) -->
+        <!-- QUICK CATEGORY ROW -->
         <section class="res-cats">
           <div class="res-cats-head">
             <h2>Browse by type</h2>
@@ -649,7 +712,7 @@
           </div>
         </section>
 
-        <!-- POPULAR RIGHT NOW (NEW) -->
+        <!-- POPULAR RIGHT NOW -->
         <div class="res-popular">
           <div class="res-popular-label">Popular right now</div>
           <div class="res-popular-links">
@@ -670,6 +733,7 @@
 
           <!-- Example card 1 -->
           <article class="res-card" data-type="guide">
+            <div class="res-download-badge">1.2k downloads</div>
             <div class="res-thumb">
               <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=900&q=70"
                    alt="Safety & laminated glass guide">
@@ -722,7 +786,7 @@
             </div>
           </article>
 
-          <!-- Example card 4 -->
+          <!-- Example card 4 (VIDEO) -->
           <article class="res-card" data-type="video">
             <div class="res-thumb">
               <img src="https://images.unsplash.com/photo-1519710884009-22a6914642f4?auto=format&fit=crop&w=900&q=70"
@@ -736,7 +800,10 @@
                 Simple steps for moving, glazing and sealing double glazed units safely on site —
                 aimed at shopfront and residential installers.
               </p>
-              <a href="#"><span class="btn brand-primary res-btn">Watch video</span></a>
+              <a href="#" class="res-video-trigger"
+                 data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                <span class="btn brand-primary res-btn">Watch video</span>
+              </a>
             </div>
           </article>
 
@@ -798,13 +865,21 @@
 
   </main>
 
+  <!-- VIDEO MODAL -->
+  <div class="res-video-modal" id="resVideoModal">
+    <div class="res-video-box">
+      <iframe id="resVideoFrame" width="100%" height="400" src=""
+        frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
   <!-- FOOTER (injected) -->
   <div id="footer"></div>
 
   <!-- HEADER / FOOTER injection script -->
   <script src="header-footer.js" defer></script>
 
-  <!-- FILTER + SEARCH LOGIC -->
+  <!-- FILTER + SEARCH + VIDEO LOGIC -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const filterButtons = document.querySelectorAll('.res-filter-bar button');
@@ -812,6 +887,9 @@
       const searchInput = document.getElementById('resSearchInput');
       const searchBtn = document.getElementById('resSearchBtn');
       const catButtons = document.querySelectorAll('.res-cat');
+      const videoTriggers = document.querySelectorAll('.res-video-trigger');
+      const videoModal = document.getElementById('resVideoModal');
+      const videoFrame = document.getElementById('resVideoFrame');
 
       function applyFilters() {
         const activeBtn = document.querySelector('.res-filter-bar button.active');
@@ -835,14 +913,13 @@
         });
       });
 
-      // Make category row trigger the same filters
+      // Category row triggers same filters
       catButtons.forEach(cat => {
         cat.addEventListener('click', () => {
           const filter = cat.dataset.filter;
           const btnToClick = document.querySelector('.res-filter-bar button[data-filter="' + filter + '"]');
           if (btnToClick) {
             btnToClick.click();
-            // Scroll to grid area for better UX
             const grid = document.getElementById('resGrid');
             if (grid) {
               grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -858,6 +935,27 @@
           applyFilters();
         }
       });
+
+      // VIDEO MODAL
+      if (videoModal && videoFrame && videoTriggers.length) {
+        videoTriggers.forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const url = this.dataset.video;
+            if (!url) return;
+            videoFrame.src = url;
+            videoModal.classList.add('open');
+          });
+        });
+
+        videoModal.addEventListener('click', function () {
+          videoModal.classList.remove('open'); 
+          videoFrame.src = '';
+        });
+      }
+
+      // initial filter
+      applyFilters();
     });
   </script>
 
