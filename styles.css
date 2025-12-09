@@ -36,7 +36,7 @@ img{max-width:100%;display:block}
 /* nav */
 .nav{ display:flex; align-items:center; gap:14px; flex:1; }
 .nav-list{ display:flex; gap:12px; list-style:none; margin:0; padding:0; align-items:center; justify-content:flex-end; flex:1; }
-.nav-link, .nav-btn{ font-weight:600; padding:8px 12px; border-radius:8px; background:transparent; color:var(--text); cursor:pointer; font-size:14px; transition: all .12s ease; }
+.nav-link, .nav-btn{ font-weight:600; padding:8px 12px; border-radius:0px; background:transparent; color:var(--text); cursor:pointer; font-size:14px; transition: all .12s ease; }
 .nav-link.active{ color:var(--brand); }
 button{ -webkit-appearance:none; appearance:none; background:transparent; border:0; }
 
@@ -497,4 +497,29 @@ button{ -webkit-appearance:none; appearance:none; background:transparent; border
   display: grid;
   gap: 24px;
   grid-template-columns: 2fr 1fr 1fr 1.3fr; /* brand + 3 columns */
+}
+.nav-link.active,
+.nav-btn.active {
+  color: var(--brand, #a32035);
+  border-bottom: 2px solid currentColor;
+}
+
+.nav-link.active:hover {
+  color: var(--brand, #a32035);
+}
+/* ✅ Swiper Dots Color Change Only */
+
+/* Normal inactive dot */
+.hero-swiper .swiper-pagination-bullet {
+  background: #9ca3af;   /* light gray */
+  opacity: 1;
+}
+
+/* ✅ Active dot (RED) */
+.hero-swiper .swiper-pagination-bullet-active {
+  background: #a32035;   /* Davis Glass Red */
+}
+.thumbs .thumb.active {
+  border: 2px solid #a32035 !important;
+  box-shadow: 0 0 0 2px rgba(163,32,53,0.25);
 }

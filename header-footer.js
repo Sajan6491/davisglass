@@ -8,7 +8,7 @@
 
       <nav class="nav" role="navigation" aria-label="Main navigation">
         <ul class="nav-list">
-          <li class="nav-item"><a class="nav-link active" href="home.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
           <li class="nav-item has-mega">
             <button type="button" class="nav-btn pro" aria-expanded="false" aria-controls="mega">Products ▾</button>
           </li>
@@ -197,19 +197,39 @@
 
       newProductsBtn.addEventListener('click', function(e){
         e.preventDefault(); e.stopPropagation();
-        if(isMobile()){ if(mobilePanel){ mobilePanel.classList.add('open'); hamburger && hamburger.classList.add('open'); document.body.style.overflow = 'hidden'; if(hamburger) hamburger.setAttribute('aria-expanded','true'); } return; }
+        if(isMobile()){
+          if(mobilePanel){
+            mobilePanel.classList.add('open');
+            hamburger && hamburger.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            if(hamburger) hamburger.setAttribute('aria-expanded','true');
+          }
+          return;
+        }
         if(megaPanel.classList.contains('open')) closeMega(); else openMega();
       });
 
       backdrop.addEventListener('click', function(e){ e.stopPropagation(); closeMega(); });
       $$('.mega-panel a').forEach(a => a.addEventListener('click', function(){ closeMega(false); }));
 
-      document.addEventListener('click', function(e){ if(!megaPanel.classList.contains('open')) return; if(e.target.closest('.mega-panel') || e.target.closest('.nav-item.has-mega')) return; closeMega(); });
+      document.addEventListener('click', function(e){
+        if(!megaPanel.classList.contains('open')) return;
+        if(e.target.closest('.mega-panel') || e.target.closest('.nav-item.has-mega')) return;
+        closeMega();
+      });
 
       document.addEventListener('keydown', function(e){
         if(e.key === 'Escape' || e.key === 'Esc'){
-          if(megaPanel.classList.contains('open')) { e.preventDefault(); closeMega(); }
-          if(mobilePanel && mobilePanel.classList.contains('open')){ mobilePanel.classList.remove('open'); hamburger && hamburger.classList.remove('open'); document.body.style.overflow=''; if(hamburger) hamburger.setAttribute('aria-expanded','false'); }
+          if(megaPanel.classList.contains('open')) {
+            e.preventDefault();
+            closeMega();
+          }
+          if(mobilePanel && mobilePanel.classList.contains('open')){
+            mobilePanel.classList.remove('open');
+            hamburger && hamburger.classList.remove('open');
+            document.body.style.overflow='';
+            if(hamburger) hamburger.setAttribute('aria-expanded','false');
+          }
         }
       });
 
@@ -222,8 +242,13 @@
           e.stopPropagation();
           const open = newHamb.classList.toggle('open');
           newHamb.setAttribute('aria-expanded', String(open));
-          if(open){ mobilePanel && mobilePanel.classList.add('open'); document.body.style.overflow='hidden'; }
-          else { mobilePanel && mobilePanel.classList.remove('open'); document.body.style.overflow=''; }
+          if(open){
+            mobilePanel && mobilePanel.classList.add('open');
+            document.body.style.overflow='hidden';
+          } else {
+            mobilePanel && mobilePanel.classList.remove('open');
+            document.body.style.overflow='';
+          }
         });
 
         $$('.mobile-panel a').forEach(a => a.addEventListener('click', function(){
@@ -254,6 +279,45 @@
     }
   }
 
+  // NEW: set active nav link based on current page
+  function setActiveNav() {
+    try {
+      const links = document.querySelectorAll('.nav .nav-link');
+      if (!links.length) return;
+
+      // current file name (home.html, about.html, etc.)
+      let current = window.location.pathname.split('/').pop() || '';
+      current = current.toLowerCase();
+
+      // handle index.html or empty path as home.html
+      if (current === '' || current === 'index.html') {
+        current = 'home.html';
+      }
+
+      links.forEach(link => {
+        link.classList.remove('active');
+        const href = (link.getAttribute('href') || '').toLowerCase();
+        if (href === current) {
+          link.classList.add('active');
+        }
+        // special case: products page -> highlight Products button
+        if (current === 'products.html' && href === 'home.html') {
+          // do nothing
+        }
+      });
+
+      // Highlight Products tab when on products.html
+      if (current === 'products.html') {
+        const productsBtn = document.querySelector('.nav-item.has-mega .nav-btn');
+        if (productsBtn) {
+          productsBtn.classList.add('active');
+        }
+      }
+    } catch (e) {
+      console.warn('setActiveNav error', e);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function(){
     const headerEl = document.getElementById('header');
     const footerEl = document.getElementById('footer');
@@ -261,11 +325,15 @@
     if(headerEl) headerEl.innerHTML = HeaderHTML();
     if(footerEl) footerEl.innerHTML = FooterHTML();
 
+    // after header injected, set active link
+    setActiveNav();
+
     const ok = initMega();
     if(!ok && headerEl){
       const mo = new MutationObserver((records, obs) => {
         if(headerEl.querySelector('.nav-item.has-mega')){
           initMega();
+          setActiveNav();
           obs.disconnect();
         }
       });
