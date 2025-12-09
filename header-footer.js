@@ -85,26 +85,64 @@
 
   function FooterHTML(){
     return `
- <footer class="footer" id="contact">
-    <div class="grid">
-      <div class="brand">
-        <img src="https://www.davisglass.com.au/images/stat_imgs/TEMP-davis-glass-logo-header-WBG.jpg" alt="logo">
-        <p style="margin-top:8px;color:#cbd7e2">Davis Glass — Architectural &amp; performance glass. Technical support and product specs for designers and fabricators.</p>
-        <p style="margin-top:8px;color:#cbd7e2;font-size:13px;"><strong>Partners:</strong> Soltech · Viridian · Evantage</p>
+<footer class="footer" id="contact">
+  <div class="grid">
+    <!-- Brand -->
+    <div class="brand">
+      <img src="https://www.davisglass.com.au/images/stat_imgs/TEMP-davis-glass-logo-header-WBG.jpg" alt="logo">
+      <p style="margin-top:8px;color:#cbd7e2">
+        Davis Glass — Architectural &amp; performance glass. Technical support and product specs for designers and fabricators.
+      </p>
+      <p style="margin-top:8px;color:#cbd7e2;font-size:13px;">
+        <strong>Partners:</strong> Soltech · Viridian · Evantage
+      </p>
+    </div>
+
+    <!-- Products -->
+    <div class="links">
+      <strong style="color:#e6eef6">Products</strong>
+      <a class="footer-links" href="products.html#laminate">Laminate</a>
+      <a class="footer-links" href="products.html#lowe">Low-E</a>
+      <a class="footer-links" href="products.html#dgu">DGU</a>
+      <!-- extra product links (optional) -->
+      <a class="footer-links" href="products.html#toughened">Toughened glass</a>
+      <a class="footer-links" href="products.html#mirror">Mirror</a>
+    </div>
+
+    <!-- Company / Info -->
+    <div class="links">
+      <strong style="color:#e6eef6">Company</strong>
+      <a class="footer-links" href="about.html">About Davis Glass</a>
+      <a class="footer-links" href="resources.html">Resources</a>
+      <a class="footer-links" href="home.html#standfor">What we stand for</a>
+      <a class="footer-links" href="home.html#products-showcase-improved">Products overview</a>
+    </div>
+
+    <!-- Contact -->
+    <div class="contact">
+      <strong style="color:#e6eef6">Contact</strong>
+      <div class="footer-contact">(03) 9330 1200</div>
+      <div class="footer-contact">156 Melrose Drive, Tullamarine VIC 3043</div>
+      <div class="footer-contact">
+        <a href="mailto:info@davisglass.com.au" class="footer-links">info@davisglass.com.au</a>
       </div>
-      <div class="links">
-        <strong style="color:#e6eef6">Products</strong>
-        <a class="footer-links" href="products.html#laminate">Laminate</a>
-        <a class="footer-links" href="products.html#lowe">Low-E</a>
-        <a class="footer-links" href="products.html#dgu">DGU</a>
-      </div>
-      <div class="contact">
-        <strong style="color:#e6eef6">Contact</strong>
-        <div class="footer-contact">(03) 9330 1200</div>
-        <div class="footer-contact">156 Melrose Drive, Tullamarine VIC 3043</div>
+      <div class="footer-contact" style="margin-top:6px;font-size:13px;color:#cbd7e2;">
+        Mon–Fri: 7:30am – 4:30pm
       </div>
     </div>
-  </footer>
+  </div>
+
+  <!-- Optional bottom bar -->
+  <div class="footer-bottom" style="margin-top:20px;padding-top:12px;border-top:1px solid rgba(148,163,184,0.4);font-size:12px;color:#cbd7e2;text-align:center;">
+    © <span id="year"></span> Davis Glass. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  // current year in footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
     `;
   }
 

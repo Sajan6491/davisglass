@@ -493,3 +493,8 @@ button{ -webkit-appearance:none; appearance:none; background:transparent; border
   }
 }
 
+.footer .grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 2fr 1fr 1fr 1.3fr; /* brand + 3 columns */
+}
