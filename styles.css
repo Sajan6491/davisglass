@@ -521,5 +521,5 @@ button{ -webkit-appearance:none; appearance:none; background:transparent; border
 }
 .thumbs .thumb.active {
   border: 2px solid #a32035 !important;
-  box-shadow: 0 0 0 2px rgba(163,32,53,0.25);
+  box-shadow: 0 0 0 2px rgba(163,32,53,0.25);  
 }
